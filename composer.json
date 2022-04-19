@@ -39,6 +39,7 @@
         }
     },
     "extra" : {
-        "class" : "PW\\Composer\\Plugin"
+        "class" : "PW\\Composer\\Plugin",
+        "plugin-modifies-install-path": true
     }
 }
