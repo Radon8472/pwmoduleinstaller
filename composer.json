@@ -39,6 +39,6 @@
         }
     },
     "extra" : {
-        "class" : "PW\\Composer\\SystemInstaller"
+        "class" : "PW\\Composer\\Plugin"
     }
 }
