@@ -14,6 +14,9 @@ class SystemInstaller extends LibraryInstaller
     {
         // do the installation
         parent::install($repo, $package);
+        $installPath = $this->getPackageBasePath($package);
+        if(!file_exists("$installPath/composer.json"))
+            $this->io->write(sprintf('<error>Files in "%s" not created</error>', $installPath));
     }
 
     /**
@@ -23,6 +26,9 @@ class SystemInstaller extends LibraryInstaller
     {
         // do the installation
         parent::uninstall($repo, $package);
+        $installPath = $this->getPackageBasePath($package);
+        if(file_exists("$installPath"))
+            $this->io->write(sprintf('<warning>Files in "%s" where not deleted</warning>', $installPath));
     }
 
     /**
