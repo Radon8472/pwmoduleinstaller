@@ -4,6 +4,7 @@ namespace PW\Composer;
 use Composer\Installer\LibraryInstaller;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
+use React\Promise\PromiseInterface;
 
 class SystemInstaller extends LibraryInstaller
 {
@@ -13,10 +14,21 @@ class SystemInstaller extends LibraryInstaller
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
         // do the installation
-        parent::install($repo, $package);
+        $promise = parent::install($repo, $package);
         $installPath = $this->getPackageBasePath($package);
-        if(!file_exists("$installPath/composer.json"))
-            $this->io->write(sprintf('<error>Files in "%s" not created</error>', $installPath));
+        $io = $this->io;
+        $outputStatus = function () use ($io, $installPath) {
+            if(!file_exists("$installPath/composer.json"))
+                $this->io->write(sprintf('<error>Files in "%s" not created</error>', $installPath));
+        };
+
+        // Composer v2 might return a promise here
+        if ($promise instanceof PromiseInterface) {
+            return $promise->then($outputStatus);
+        }
+
+        // If not, execute the code right away as parent::uninstall executed synchronously (composer v1, or v2 without async)
+        $outputStatus();
     }
 
     /**
@@ -25,10 +37,21 @@ class SystemInstaller extends LibraryInstaller
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
         // do the installation
-        parent::uninstall($repo, $package);
+        $promise = parent::uninstall($repo, $package);
         $installPath = $this->getPackageBasePath($package);
-        if(file_exists("$installPath"))
-            $this->io->write(sprintf('<warning>Files in "%s" where not deleted</warning>', $installPath));
+        $io = $this->io;
+        $outputStatus = function () use ($io, $installPath) {
+            if(file_exists("$installPath"))
+                $this->io->write(sprintf('<warning>Files in "%s" where not deleted</warning>', $installPath));
+        };
+
+        // Composer v2 might return a promise here
+        if ($promise instanceof PromiseInterface) {
+            return $promise->then($outputStatus);
+        }
+
+        // If not, execute the code right away as parent::uninstall executed synchronously (composer v1, or v2 without async)
+        $outputStatus();
     }
 
     /**
