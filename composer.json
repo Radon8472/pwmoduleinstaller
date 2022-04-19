@@ -1,6 +1,6 @@
 {
     "name": "hari/pw-module",    
-    "type": "composer-installer",
+    "type": "composer-plugin",
     "license": "BSD-2-Clause",
     "description": "Installs processwire 3rd party modules to PW system \"site/modules\" directory.",    
     "minimum-stability": "dev",
@@ -27,6 +27,9 @@
             "homepage": "https://github.com/Radon8472"
         }
     ],
+    "require": {
+        "composer-plugin-api": "^1.0 || ^2.0"
+    },
     "require-dev": {
         "composer/composer": "1.0.* || ^2.0"
     },
