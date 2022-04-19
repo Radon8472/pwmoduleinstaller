@@ -15,7 +15,7 @@ class SystemInstaller extends LibraryInstaller
         // do the installation
         parent::install($repo, $package);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -24,7 +24,7 @@ class SystemInstaller extends LibraryInstaller
         // do the installation
         parent::uninstall($repo, $package);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -42,7 +42,7 @@ class SystemInstaller extends LibraryInstaller
         list($vendor, $name) = $this->getVendorAndName($package);
         return "site/modules/{$name}";
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -50,16 +50,16 @@ class SystemInstaller extends LibraryInstaller
     {
         return $packageType == 'pw-module';
     }
-    
+
     /**
-     * 
+     *
      * Given a PackageInterface, returns the package vendor and name.
-     * 
+     *
      * @param PackageInterface $package The package to work with.
-     * 
+     *
      * @return array An array where element 0 is the package vendor and
      * element 1 is the package name.
-     * 
+     *
      */
     private function getVendorAndName(PackageInterface $package)
     {
@@ -68,15 +68,15 @@ class SystemInstaller extends LibraryInstaller
         $name = $this->ucSnakeWords($name);
         return array($vendor, $name);
     }
-    
+
     /**
-     * 
+     *
      * Converts "this-text" to "This_Text".
-     * 
+     *
      * @param string $text The string to convert.
-     * 
+     *
      * @return string The converted string.
-     * 
+     *
      */
     private function ucSnakeWords($text)
     {
