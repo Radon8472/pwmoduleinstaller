@@ -16,10 +16,10 @@ class SystemInstaller extends LibraryInstaller
         // do the installation
         $promise = parent::install($repo, $package);
         $installPath = $this->getPackageBasePath($package);
-        $io = $this->io;
-        $outputStatus = function () use ($io, $installPath) {
-            if(!file_exists("$installPath/composer.json"))
+        $outputStatus = function () use ($installPath) {
+            if (! is_dir($installPath)) {
                 $this->io->write(sprintf('<error>Files in "%s" not created</error>', $installPath));
+            }
         };
 
         // Composer v2 might return a promise here
@@ -39,10 +39,10 @@ class SystemInstaller extends LibraryInstaller
         // do the installation
         $promise = parent::uninstall($repo, $package);
         $installPath = $this->getPackageBasePath($package);
-        $io = $this->io;
-        $outputStatus = function () use ($io, $installPath) {
-            if(file_exists("$installPath"))
+        $outputStatus = function () use ($installPath) {
+            if (is_dir($installPath)) {
                 $this->io->write(sprintf('<warning>Files in "%s" where not deleted</warning>', $installPath));
+            }
         };
 
         // Composer v2 might return a promise here
