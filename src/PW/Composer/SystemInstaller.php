@@ -16,8 +16,16 @@ class SystemInstaller extends LibraryInstaller
         // do the installation
         $promise = parent::install($repo, $package);
         $installPath = $this->getPackageBasePath($package);
-        $outputStatus = function () use ($installPath) {
-            if (! is_dir($installPath)) {
+        list(, $name) = $this->getVendorAndName($package);
+        $outputStatus = function () use ($installPath, $name) {
+            $filesExists = false;
+            foreach (['module', 'module.php'] as $ext) {
+                if(file_exists("{$installPath}/{$name}.{$ext}")) {
+                    $filesExists = true;
+                    break;
+                }
+            }
+            if(!$filesExists) {
                 $this->io->write(sprintf('<error>Files in "%s" not created</error>', $installPath));
             }
         };

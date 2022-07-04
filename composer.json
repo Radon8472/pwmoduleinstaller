@@ -1,5 +1,5 @@
 {
-    "name": "hari/pw-module",    
+    "name": "hari/pw-module",
     "type": "composer-plugin",
     "license": "BSD-2-Clause",
     "description": "Installs processwire 3rd party modules to PW system \"site/modules\" directory.",    
@@ -31,7 +31,7 @@
         "composer-plugin-api": "^1.0 || ^2.0"
     },
     "require-dev": {
-        "composer/composer": "1.0.* || ^2.0"
+        "composer/composer": "^1.10.23 || ^2.1.9"
     },
     "autoload": {
         "psr-0": {
